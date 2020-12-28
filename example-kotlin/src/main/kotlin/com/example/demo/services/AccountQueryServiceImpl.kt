@@ -17,7 +17,7 @@ class AccountQueryServiceImpl(private val eventStore: EventStore, private val ac
             .collect(Collectors.toList())
     }
 
-    override fun getAccount(accountNumber: String): AccountQueryEntity {
-        return accountRepository.findById(accountNumber).get()
+    override fun getAccount(accountNumber: String): AccountQueryEntity? {
+        return accountRepository.findById(accountNumber).orElseThrow()
     }
 }

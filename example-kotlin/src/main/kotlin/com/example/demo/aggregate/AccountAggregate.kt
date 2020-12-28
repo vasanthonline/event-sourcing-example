@@ -17,10 +17,10 @@ import org.axonframework.spring.stereotype.Aggregate
 @Aggregate
 class AccountAggregate {
     @AggregateIdentifier
-    var id: String = ""
+    lateinit var id: String
     var accountBalance:Double = 0.0
-    var currency: String = ""
-    var status: String = ""
+    lateinit var currency: String
+    lateinit var status: String
 
     constructor() {}
 

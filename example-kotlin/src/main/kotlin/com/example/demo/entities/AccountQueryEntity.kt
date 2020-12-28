@@ -9,13 +9,13 @@ import javax.persistence.Id
 class AccountQueryEntity {
 
     @Id
-    private var id: String = ""
+    private lateinit var id: String
 
-    private var accountBalance = 0.0
+    private var accountBalance: Double = 0.0
 
-    private var currency: String = ""
+    private lateinit var currency: String
 
-    private var status: String = ""
+    private lateinit var status: String
 
     fun getId(): String? {
         return id

@@ -12,23 +12,24 @@ import org.springframework.stereotype.Component
 @Component
 class AccountQueryEntityManager {
     @Autowired
-    private val accountRepository: AccountRepository? = null
+    private lateinit var accountRepository: AccountRepository
 
     @Autowired
     @Qualifier("accountAggregateEventSourcingRepository")
-    private val accountAggregateEventSourcingRepository: EventSourcingRepository<AccountAggregate>? = null
+    private lateinit var accountAggregateEventSourcingRepository: EventSourcingRepository<AccountAggregate>
+
     @EventSourcingHandler
     fun on(event: BaseEvent<String>) {
         persistAccount(buildQueryAccount(getAccountFromEvent(event)))
     }
 
     private fun getAccountFromEvent(event: BaseEvent<String>): AccountAggregate {
-        return accountAggregateEventSourcingRepository!!.load(event.id.toString()).getWrappedAggregate()
+        return accountAggregateEventSourcingRepository.load(event.id.toString()).getWrappedAggregate()
             .getAggregateRoot()
     }
 
     private fun findExistingOrCreateQueryAccount(id: String): AccountQueryEntity {
-        return accountRepository?.findById(id)?.orElse(AccountQueryEntity()) ?: AccountQueryEntity()
+        return accountRepository.findById(id).orElse(AccountQueryEntity()) ?: AccountQueryEntity()
     }
 
     private fun buildQueryAccount(accountAggregate: AccountAggregate): AccountQueryEntity {
@@ -41,6 +42,6 @@ class AccountQueryEntityManager {
     }
 
     private fun persistAccount(accountQueryEntity: AccountQueryEntity) {
-        accountRepository?.save(accountQueryEntity)
+        accountRepository.save(accountQueryEntity)
     }
 }

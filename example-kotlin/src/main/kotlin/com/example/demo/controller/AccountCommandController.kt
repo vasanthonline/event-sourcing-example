@@ -13,8 +13,8 @@ import java.util.concurrent.CompletableFuture
 @RestController
 @RequestMapping(value = ["/bank-accounts"])
 @Api(value = "Account Commands", description = "Account Commands Related Endpoints", tags = arrayOf("Account Commands"))
-class AccountCommandController(accountCommandService: AccountCommandService) {
-    private val accountCommandService: AccountCommandService
+class AccountCommandController(private val accountCommandService: AccountCommandService) {
+
     @PostMapping
     fun createAccount(@RequestBody accountCreateDTO: AccountCreateDTO): CompletableFuture<String> {
         return accountCommandService.createAccount(accountCreateDTO)
@@ -34,9 +34,5 @@ class AccountCommandController(accountCommandService: AccountCommandService) {
         @RequestBody moneyDebitDTO: MoneyDebitDTO
     ): CompletableFuture<String> {
         return accountCommandService.debitMoneyFromAccount(accountNumber, moneyDebitDTO)
-    }
-
-    init {
-        this.accountCommandService = accountCommandService
     }
 }

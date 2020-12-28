@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController
 @Api(value = "Account Queries", description = "Account Query Events Endpoint", tags = arrayOf("Account Queries"))
 class AccountQueryController(private val accountQueryService: AccountQueryService) {
     @GetMapping("/{accountNumber}")
-    fun getAccount(@PathVariable(value = "accountNumber") accountNumber: String?): AccountQueryEntity? {
+    fun getAccount(@PathVariable(value = "accountNumber") accountNumber: String): AccountQueryEntity? {
         return accountQueryService.getAccount(accountNumber)
     }
 
     @GetMapping("/{accountNumber}/events")
-    fun listEventsForAccount(@PathVariable(value = "accountNumber") accountNumber: String?): List<Any?>? {
+    fun listEventsForAccount(@PathVariable(value = "accountNumber") accountNumber: String): List<Any?>? {
         return accountQueryService.listEventsForAccount(accountNumber)
     }
 }
